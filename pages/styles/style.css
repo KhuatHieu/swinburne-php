@@ -1,0 +1,438 @@
+/*
+filename: style.css
+author: Le Hoang Minh&Nguyen Minh Hieu
+created: 21/2/2024
+last modified: 27/2/2024
+description: Assignment1
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+/*display background graphic*/
+
+.banner1, .banner2, .banner3, .banner4 {
+    width: 100%;
+    height: 100vh;
+
+
+}
+
+/*display background1 cover on home page*/
+.banner1 {
+    background-image: linear-gradient(rgba(35, 33, 33, 0.75), rgba(85, 73, 73, 0.75)), url(images/background1.jpg);
+    background-size: cover;
+    background-position: center;
+
+}
+
+/*display background2 cover on jobs page*/
+.banner2 {
+    background-image: linear-gradient(rgba(35, 33, 33, 0.75), rgba(85, 73, 73, 0.75)), url(images/background2.jpg);
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+    position: fixed; /* for the cover to follow when scrolling*/
+    overflow-y: auto;
+}
+
+/*display background5 cover on apply page*/
+.banner3 {
+    background-image: linear-gradient(rgba(35, 33, 33, 0.75), rgba(85, 73, 73, 0.75)), url(images/background5.jpg);
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    overflow-y: auto;
+}
+
+/*display background4 cover on about page*/
+.banner4 {
+    background-image: linear-gradient(rgba(35, 33, 33, 0.75), rgba(85, 73, 73, 0.75)), url(images/background4.jpg);
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+
+
+}
+
+/*customize navigation bar*/
+.navbar {
+    width: 85%;
+    margin: auto;
+    padding: 45px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: 12%;
+    left: 47%;
+    transform: translate(-50%, -50%);
+}
+
+/*logo to be scaled*/
+.logo {
+    width: 200px;
+
+}
+
+/*set the margin and dsiplay the list in inline-block*/
+.navbar ul li {
+    list-style: none;
+    display: inline-block;
+    margin: 10px 10px 10px 10px;
+
+}
+
+/*set the scale for list item , centering , uppercasing and set the z-index for enhancement*/
+.navbar ul li a {
+    text-decoration: none;
+    width: 80px;
+    height: 65px;
+    text-align: center;
+    line-height: 65px;
+    color: rgb(244, 238, 238);
+    text-transform: uppercase;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+
+}
+
+/*styling text in navbar*/
+.home, .jobs, .apply, .about, .enhancements {
+
+    position: relative;
+    color: #f7f4f4;
+    transition: 0.5s;
+    z-index: 3;
+}
+
+/*change color upon hover*/
+.navbar ul li:hover {
+    color: #fff;
+}
+
+/*Hover effect background for navigation items */
+.navbar ul li a:before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #009688;
+    transition: 0.5s;
+    z-index: 2;
+}
+
+.navbar ul li a:hover:before {
+    top: 0;
+}
+
+/*content styling*/
+.content {
+    width: 100%;
+    position: absolute;
+    top: 32%;
+    text-align: center;
+    color: #fff;
+
+}
+
+.content h1 {
+    font-size: 50px;
+    margin-top: 50px;
+}
+
+/*button styling*/
+button {
+    padding: 15px 25px 15px 25px;
+    text-align: center;
+    margin: 40px;
+    border-radius: 15px;
+    border: 2px solid white;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+/*change color and bg on hover*/
+button:hover {
+    font-weight: bold;
+    transition: 0.5s;
+    background-color: #fff;
+    color: black;
+}
+
+/*footer styling*/
+footer {
+    color: #ccc;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+}
+
+/*aside styling*/
+aside {
+    position: fixed;
+    top: 50%;
+    right: 10%;
+    transform: translate(0, -50%);
+    width: 200px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(39, 38, 38, 0.1);
+    border: 3px solid green;
+    border-radius: 17px;
+
+}
+
+/*set border for jobs content*/
+.frontend, .backend {
+    background-color: #ffffff;
+    top: 40%;
+    width: 50%;
+    padding: 30px 30px 30px 30px;
+    margin: 20px 20px 20px;
+    border-radius: 17px;
+    border: 4px solid black;
+}
+
+/*border color change on hover*/
+.frontend:hover, .backend:hover {
+    border: 4px solid brown;
+}
+
+/* Main content styling */
+main {
+    right: 10%;
+    margin: 10px;
+    padding: 10px 10px 0 10px;
+    top: 90%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+
+}
+
+/*set gap for content in jobs*/
+.jobdetail, .frontend, .backend {
+    display: grid;
+    gap: 1rem;
+}
+
+/*aside styling*/
+aside {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Form styling */
+.form {
+
+    margin-top: 200px;
+    display: flex;
+    height: 100vh;
+    border: 3px solid black;
+    border-radius: 17px;
+    background-color: #ccc;
+    color: black;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    gap: 1rem;
+
+}
+
+/* Set width to 50% to ensure they each take half the width */
+.members-col {
+    width: 50%;
+    box-sizing: border-box;
+}
+
+/* Float the leader to the left */
+.leader {
+    width: 100%;
+    float: left;
+    display: flex;
+    justify-content: center;
+}
+
+/* Float the image to the left */
+.leader img {
+    float: left;
+    margin-right: 10px;
+}
+
+/* Float the member to the right */
+.member {
+    width: 100%;
+    float: right;
+    display: flex;
+    justify-content: center;
+}
+
+/* Float the image to the right */
+.member img {
+    float: right;
+    margin-left: 10px;
+}
+
+/*image scale and styling*/
+img {
+
+    margin-bottom: 4rem;
+    height: 300px;
+    width: 300px;
+    object-fit: contain;
+    clear: both;
+    display: grid;
+    gap: 1rem;
+
+}
+
+/*style brief*/
+.brief {
+
+
+    background-color: burlywood;
+    display: inline;
+
+    padding: 10px 10px 10px 10px;
+    border-radius: 17px;
+    border: 2px solid black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*set font and center text*/
+body {
+    text-align: center;
+    font-size: large;
+}
+
+/*table styling*/
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+th {
+    font-weight: bold;
+}
+
+td {
+    background-color: #f0f0f0;
+}
+
+/*input styling*/
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+
+input[type=submit] {
+
+    color: black;
+    padding: 12px 20px;
+    border: 2px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    float: left;
+}
+
+input[type=submit]:hover {
+    transition: 0.5s;
+    background-color: black;
+    color: white;
+}
+
+/*style form container*/
+.container {
+
+    left: 33%;
+    top: 50%;
+    position: absolute;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px 20px 20px 20px;
+    display: flex;
+
+    flex-direction: column;
+    display: grid;
+
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+}
+
+/*label styling*/
+.col-25 {
+    font-size: smaller;
+    float: left;
+    width: 40%;
+    margin-top: 7px;
+}
+
+/*input styling*/
+.col-75 {
+    float: left;
+    width: 50%;
+    margin-top: 7px;
+
+}
+
+/* Clear floats after the columns */
+.row::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+
+    }
+
+}
+
