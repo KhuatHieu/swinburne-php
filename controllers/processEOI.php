@@ -86,8 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     validateRequests();
 
-    var_dump($_POST);
-
     $eoi = new EOI();
 
     $eoi->jobRefNumber = valueFromPost('jobRefNumber');
@@ -108,8 +106,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $eoi->skillsCreativity = (int)existsFromPost('skillsCreativity');
     $eoi->skillsTimeManagement = (int)existsFromPost('skillsTimeManagement');
     $eoi->skillsOther = valueFromPost('skillsOther');
-
-    var_dump($eoi->skillsCreativity);
 
     if ($eoi->save()) {
         unset($_SESSION["old"]);
