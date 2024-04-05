@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <div class="navbar">
     <img src="images/logo.png" class="logo" alt="company logo">
     <ul>

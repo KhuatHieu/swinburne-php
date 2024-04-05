@@ -2,10 +2,15 @@
 
 function fromGet($key)
 {
-    return $_GET[$key] ?? '';
+    return $_GET[$key] ?? null;
 }
 
-function fromPost($key)
+function valueFromPost($key)
 {
-    return $_POST[$key] ?? '';
+    return $_POST[$key] ?? null;
+}
+
+function existsFromPost($key): bool
+{
+    return isset($_POST[$key]);
 }

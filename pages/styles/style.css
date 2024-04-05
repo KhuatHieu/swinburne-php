@@ -81,6 +81,19 @@ body {
     overflow-y: auto; /* Enable vertical scrolling if content exceeds container height */
 
 }
+
+.text-error {
+    font-size: 13px;
+    color: red;
+}
+
+.notification-badge {
+    padding: 10px;
+    font-size: 15px;
+    background-color: green;
+    color: white;
+}
+
 /*customize navigation bar*/
 .navbar {
     width: 80%;
