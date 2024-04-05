@@ -44,7 +44,7 @@
     <?php endif; ?>
 
     <h1>Job Application Form</h1>
-    <form method="post" action="processEOI.php" novalidate="novalidate">
+    <form method="post" action="controllers/processEOI.php">
         <div class="row">
             <div class="col-25">
                 <label for="jobRef">Job reference number</label>

@@ -1,16 +1,14 @@
 <?php
 
-require_once 'helpers/request.php';
-require_once 'helpers/validate.php';
-require_once 'db/db.php';
+require_once __DIR__ . '/../helpers/request.php';
+require_once __DIR__ . '/../helpers/validate.php';
+require_once __DIR__ . '/../db/db.php';
+require_once __DIR__ . '/../models/EOI.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    die(404);
-}
+use models\EOI;
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    session_start();
-
+function validateRequests(): void
+{
     validate('jobRefNumber', function ($v) {
         return !empty($_POST["jobRefNumber"]);
     }, "You must select Job Reference Number");
@@ -76,42 +74,49 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         return strlen($phoneNumber) >= 8 && strlen($phoneNumber) <= 12;
     }, "Phone must exist and number must be valid");
 
-    checkValidates();
+    beginValidates();
+}
 
-    $jobRefNumber = valueFromPost('jobRefNumber');
-    $firstName = valueFromPost('firstName');
-    $lastName = valueFromPost('lastName');
-    $dateOfBirth = valueFromPost('dateOfBirth');
-    $gender = valueFromPost('gender') == 'male' ? 1 : 0;
-    $street = valueFromPost('street');
-    $suburb = valueFromPost('suburb');
-    $state = valueFromPost('state');
-    $postcode = valueFromPost('postcode');
-    $email = valueFromPost('email');
-    $phoneNumber = valueFromPost('phoneNumber');
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    die(404);
+}
 
-    $skillsCriticalThinking = (int) existsFromPost('skillsCriticalThinking');
-    $skillsProblemSolving = (int) existsFromPost('skillsProblemSolving');
-    $skillsLeadership = (int) existsFromPost('skillsLeadership');
-    $skillsAdaptability = (int) existsFromPost('skillsAdaptability');
-    $skillsCreativity = (int) existsFromPost('skillsCreativity');
-    $skillsTimeManagement = (int) existsFromPost('skillsTimeManagement');
-    $skillsOther = valueFromPost('skillsOther');
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    session_start();
 
-    $sql = "INSERT INTO eoi (job_ref_number, first_name, last_name, date_of_birth, gender, street, suburb, state, postcode, email, phone_number, skills_critical_thinking, skills_problem_solving, skills_leadership, skills_adaptability, skills_creativity, skills_time_management, skills_other) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    validateRequests();
 
-    $mysqli = getMysqli();
-    $statement = $mysqli->prepare($sql);
+    var_dump($_POST);
 
-    $statement->bind_param("ssssssssssssssssss", $jobRefNumber, $firstName, $lastName, $dateOfBirth, $gender, $street, $suburb, $state, $postcode, $email, $phoneNumber, $skillsCriticalThinking, $skillsProblemSolving, $skillsLeadership, $skillsAdaptability, $skillsCreativity, $skillsTimeManagement, $skillsOther);
+    $eoi = new EOI();
 
-    $result = $statement->execute();
-    $statement->close();
+    $eoi->jobRefNumber = valueFromPost('jobRefNumber');
+    $eoi->firstName = valueFromPost('firstName');
+    $eoi->lastName = valueFromPost('lastName');
+    $eoi->dateOfBirth = valueFromPost('dateOfBirth');
+    $eoi->gender = valueFromPost('gender') == 'male' ? 1 : 0;
+    $eoi->street = valueFromPost('street');
+    $eoi->suburb = valueFromPost('suburb');
+    $eoi->state = valueFromPost('state');
+    $eoi->postcode = valueFromPost('postcode');
+    $eoi->email = valueFromPost('email');
+    $eoi->phoneNumber = valueFromPost('phoneNumber');
+    $eoi->skillsCriticalThinking = (int)existsFromPost('skillsCriticalThinking');
+    $eoi->skillsProblemSolving = (int)existsFromPost('skillsProblemSolving');
+    $eoi->skillsLeadership = (int)existsFromPost('skillsLeadership');
+    $eoi->skillsAdaptability = (int)existsFromPost('skillsAdaptability');
+    $eoi->skillsCreativity = (int)existsFromPost('skillsCreativity');
+    $eoi->skillsTimeManagement = (int)existsFromPost('skillsTimeManagement');
+    $eoi->skillsOther = valueFromPost('skillsOther');
 
-    unset($_SESSION["old"]);
-    unset($_SESSION["errors"]);
-    $_SESSION["successfully"] = true;
+    var_dump($eoi->skillsCreativity);
+
+    if ($eoi->save()) {
+        unset($_SESSION["old"]);
+        unset($_SESSION["errors"]);
+        $_SESSION["successfully"] = true;
+    }
 
     header("Location: " . $_SERVER['HTTP_REFERER']);
 }
+

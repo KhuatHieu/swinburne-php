@@ -1,6 +1,6 @@
 <?php
 
-require_once 'helpers/request.php';
+require_once __DIR__ . '/request.php';
 
 function validate($param, $closure, $errorMessage): void
 {
@@ -9,7 +9,7 @@ function validate($param, $closure, $errorMessage): void
     }
 }
 
-function checkValidates(): void
+function beginValidates(): void
 {
     if (!empty($_SESSION['errors'])) {
         $_SESSION["old"] = $_POST;

@@ -1,6 +1,6 @@
 <?php
 
-function fromGet($key)
+function valueFromGet($key)
 {
     return $_GET[$key] ?? null;
 }

@@ -2,7 +2,7 @@
 
 function getMysqli(): mysqli|bool
 {
-    $settings = require_once 'settings.php';
+    $settings = require __DIR__ . '/../settings.php';
 
     try {
         $mysqli = mysqli_connect(
@@ -16,7 +16,7 @@ function getMysqli(): mysqli|bool
 
         $result = $mysqli->query("SHOW TABLES LIKE 'eoi'");
         if ($result->num_rows === 0) {
-            $mysqli->query(require_once 'create_table.php');
+            $mysqli->query(require_once __DIR__ . '/create_table.php');
         }
 
         return $mysqli;
