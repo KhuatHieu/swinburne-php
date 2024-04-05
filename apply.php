@@ -8,6 +8,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Application Form</title>
     <link rel="stylesheet" href="pages/styles/style.css">
+    <style>
+        .suggestion {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .suggestion a {
+            padding: 10px;
+            display: block;
+            color: black;
+            text-decoration: none;
+        }
+
+        .suggestion a:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
 
@@ -15,7 +35,7 @@
     <?php include 'common/header.inc' ?>
 </div>
 
-<div class="container">
+<div class="content-container">
     <h1>Job Application Form</h1>
     <form method="post" action="processEOI.php">
         <div class="row">
@@ -132,70 +152,70 @@
             </div>
         </div>
         <fieldset>
-            <legend>Skills</legend>
+            <legend><strong>Skills</strong></legend>
             <div class="row">
                 <div class="col-25">
-                    <label for="critical">Critical Thinking</label>
+                    <label for="others"><strong>Other skills</strong></label>
                 </div>
                 <div class="col-75">
-                    <input type="checkbox" id="critical" name="skillsCriticalThinking" value="Critical Thinking"/>
+                    <div class="autocomplete">
+                        <input type="text" id="others" name="skillsOther" placeholder="List your other skills here" onkeyup="showSuggestions(this.value)">
+                        <div class="suggestion" id="suggestion"></div>
+                    </div>
+                    <ul id="skillList">
+                        <?php
+                        // Danh sách kỹ năng có thể lấy từ cơ sở dữ liệu hoặc một nguồn dữ liệu khác
+                        $skills = ["Critical Thinking", "Problem Solving", "Leadership", "Adaptability", "Creativity", "Time Management"];
+                        ?>
+                    </ul>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-25">
-                    <label for="solving">Problem solving</label>
-                </div>
-                <div class="col-75">
-                    <input type="checkbox" id="solving" name="skillsProblemSolving" value="Problem Solving"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-25">
-                    <label for="leadership">Leadership</label>
-                </div>
-                <div class="col-75">
-                    <input type="checkbox" id="leadership" name="skillsLeadership" value="Leadership"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-25">
-                    <label for="adaptability">Adaptability</label>
-                </div>
-                <div class="col-75">
-                    <input type="checkbox" id="adaptability" name="skillsAdaptability" value="Adaptability"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-25">
-                    <label for="creativity">Creativity</label>
-                </div>
-                <div class="col-75">
-                    <input type="checkbox" id="creativity" name="skillsCreativity" value="Creativity"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-25">
-                    <label for="timeManage">Time Management</label>
-                </div>
-                <div class="col-75">
-                    <input type="checkbox" id="timeManage" name="skillsTimeManagement" value="Time Management"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-25">
-                    <label for="others">Other skills</label>
-                </div>
-                <div class="col-75">
-                    <input type="checkbox" id="others" name="skillsOther"/>
-                    <textarea
-                            id="otherskill"
-                            name="skillsOther"
-                            placeholder="List your other skills here"
-                            rows="5"
-                            cols="30"
-                    ></textarea>
-                </div>
-            </div>
+
+            <script>
+                function showSuggestions(inputText) {
+                    const suggestionBox = document.getElementById('suggestion');
+                    const skillList = <?php echo json_encode($skills); ?>;
+                    let suggestions = [];
+
+                    if (inputText.length >= 0) {
+                        suggestions = skillList.filter(skill => skill.toLowerCase().startsWith(inputText.toLowerCase()));
+                    }
+                    suggestionBox.innerHTML = '';
+                    suggestions.forEach(suggestion => {
+                        const suggestionItem = document.createElement('a');
+                        suggestionItem.textContent = suggestion;
+                        suggestionItem.href = '#';
+                        suggestionItem.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            addSkill(suggestion);
+                        });
+                        suggestionBox.appendChild(suggestionItem);
+                    });
+                    suggestionBox.style.display = 'block';
+                }
+
+                function addSkill(skill) {
+                    const skillList = document.getElementById('skillList');
+                    const skillItem = document.createElement('userSkill');
+                    skillItem.textContent = skill;
+                    skillItem.innerHTML += ' <span class="delete" style="color: red" onclick="deleteSkill(this)">x  </span>';
+                    skillList.appendChild(skillItem);
+                    document.getElementById('others').value = '';
+                    document.getElementById('suggestion').style.display = 'none';
+
+                }
+
+                function addCustomSkill() {
+                    const customSkill = document.getElementById('others').value.trim();
+                    if (customSkill !== '') {
+                        addSkill(customSkill);
+                    }
+                }
+
+                function deleteSkill(skillElement) {
+                    skillElement.parentNode.remove();
+                }
+            </script>
         </fieldset>
         <div class="row">
             <input type="submit" value="Apply">
