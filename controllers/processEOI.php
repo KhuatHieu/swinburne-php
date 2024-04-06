@@ -36,8 +36,8 @@ function validateRequests(): void
     }, "Street must exist and would only contains 40 characters at most");
 
     validate('suburb', function ($v) {
-        return strlen($v) > 0 && strlen($v) <= 20;
-    }, "Suburb/town must exist and would only contains 20 characters at most");
+        return strlen($v) > 0 && strlen($v) <= 40;
+    }, "Suburb/town must exist and would only contains 40 characters at most");
 
     validate('state', function ($v) {
         return in_array($v, ["VIC", "NSW", "QLD", "NT", "WA", "SA", "TAS", "ACT"]);
