@@ -81,6 +81,14 @@ function validateRequests(): void
         return strlen($phoneNumber) >= 8 && strlen($phoneNumber) <= 12;
     }, "Phone must exist and number must be valid");
 
+    validate('skillsOther', function () {
+        if (existsFromPost('skillsOtherCheckbox')) {
+            return !empty(valueFromPost('skillsOther'));
+        } else {
+            return true;
+        }
+    }, "You must enter other skills if checked checkbox");
+
     beginValidates();
 }
 
