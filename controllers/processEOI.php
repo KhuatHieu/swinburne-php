@@ -55,8 +55,8 @@ function validateRequests(): void
                 return false;
             }
 
-            $postcodePrefix = substr($postcode, 0, 1);
-            return in_array($postcodePrefix, $validPostcodes[$state], true);
+            return in_array(substr($postcode, 0, 1), $validPostcodes[$state], true)
+                || in_array(substr($postcode, 0, 2), $validPostcodes[$state], true);
         }
 
         return isValidPostcodeForState($postcode, valueFromPost('state'));
