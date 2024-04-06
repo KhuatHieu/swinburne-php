@@ -145,4 +145,16 @@ class EOI
 
         return $statement->execute();
     }
+
+    public static function deleteBatchByJobRefNum($jobRefNum): bool
+    {
+        $sql = "DELETE FROM eoi WHERE job_ref_number = ?";
+
+        $mysqli = getMysqli();
+        $statement = $mysqli->prepare($sql);
+
+        $statement->bind_param("s", $jobRefNum);
+
+        return $statement->execute();
+    }
 }

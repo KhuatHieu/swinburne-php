@@ -7,15 +7,19 @@ $statuses = require_once __DIR__ . '/const/status.php';
 
 use models\EOI;
 
-$sJobRefNum = valueFromGet('job_ref_number');
-$sFirstName = valueFromGet('first_name');
-$sLastName = valueFromGet('last_name');
+$sJobRefNum = $sFirstName = $sLastName = '';
 
-$eois = EOI::where([
-    'job_ref_number' => strtolower($sJobRefNum ?? ''),
-    'first_name' => strtolower($sFirstName ?? ''),
-    'last_name' => strtolower($sLastName ?? '')
-]);
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $sJobRefNum = valueFromGet('job_ref_number');
+    $sFirstName = valueFromGet('first_name');
+    $sLastName = valueFromGet('last_name');
+
+    $eois = EOI::where([
+        'job_ref_number' => strtolower($sJobRefNum ?? ''),
+        'first_name' => strtolower($sFirstName ?? ''),
+        'last_name' => strtolower($sLastName ?? '')
+    ]);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $eoi = EOI::find(valueFromPost('eoiNumber'));
@@ -24,13 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case 'updateStatus':
             $eoi->status = valueFromPost('status');
             $eoi->save();
-
             break;
         case 'delete':
             $eoi->delete();
             break;
+        case 'deleteBatchByJobRefNum':
+            EOI::deleteBatchByJobRefNum(valueFromPost('jobRefNum'));
+            break;
     }
-
 
     echo "<meta http-equiv='refresh' content='0'>";
 }
@@ -54,24 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #343a40; /* Màu navbar */
         }
 
-        .navbar-brand {
-            color: #ffffff; /* Màu chữ navbar */
-        }
-
-        .navbar-text {
-            color: #ffffff; /* Màu chữ navbar */
-        }
-
-        .input-group {
-            width: 35%; /* Kích thước của ô tìm kiếm */
-            margin: 20px auto; /* Canh giữa ô tìm kiếm */
-            float: left; /* Dịch về bên phải */
-        }
-
-        #searchInput {
-            border-radius: 5px; /* Bo góc của ô tìm kiếm */
-        }
-
         .btn {
             border-radius: 5px; /* Bo góc của nút */
         }
@@ -91,26 +78,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </nav>
 
-<div class="table-container">
-    <form action="" method="get" class="input-group mb-3">
-        <select class="form-select" name="job_ref_number">
-            <option value="" <?php echo ($sJobRefNum === '') ? 'selected' : ''; ?>>Job Reference Number</option>
-            <option value="FE024" <?php echo ($sJobRefNum === 'FE024') ? 'selected' : ''; ?>>FE024</option>
-            <option value="BE024" <?php echo ($sJobRefNum === 'BE024') ? 'selected' : ''; ?>>BE024</option>
-        </select>
+<div>
+    <div class="d-flex flex-row">
+        <form action="" method="get" class="input-group w-50 mt-3 mb-3">
+            <select class="form-select" name="job_ref_number">
+                <option value="" <?php echo ($sJobRefNum === '') ? 'selected' : ''; ?>>Job Reference Number</option>
+                <option value="FE024" <?php echo ($sJobRefNum === 'FE024') ? 'selected' : ''; ?>>FE024</option>
+                <option value="BE024" <?php echo ($sJobRefNum === 'BE024') ? 'selected' : ''; ?>>BE024</option>
+            </select>
 
-        <input type="text" class="form-control" name="first_name"
-               value="<?php echo $sFirstName ?>" placeholder="First name">
-        <input type="text" class="form-control" name="last_name"
-               value="<?php echo $sLastName ?>" placeholder="Last name">
+            <input type="text" class="form-control" name="first_name"
+                   value="<?php echo $sFirstName ?>" placeholder="First name">
+            <input type="text" class="form-control" name="last_name"
+                   value="<?php echo $sLastName ?>" placeholder="Last name">
 
-        <button class="btn btn-outline-secondary" type="submit" id="searchButton">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
-                 viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.861 3.861a1 1 0 0 0 1.415-1.414l-3.86-3.86zM2 6.5a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0z"/>
-            </svg>
-        </button>
-    </form>
+            <button class="btn btn-outline-secondary" type="submit" id="searchButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                     viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.861 3.861a1 1 0 0 0 1.415-1.414l-3.86-3.86zM2 6.5a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0z"/>
+                </svg>
+            </button>
+        </form>
+        <div class="dropdown mt-3 mb-3 ms-auto">
+            <form action="" method="post">
+                <input type="hidden" name="_action" value="deleteBatchByJobRefNum">
+                <button class="btn btn-outline-danger dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Quick delete EOIs
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <button type="submit" class="dropdown-item" name="jobRefNum" value="FE024">FE024</button>
+                    </li>
+                    <li>
+                        <button type="submit" class="dropdown-item" name="jobRefNum" value="BE024">BE024</button>
+                    </li>
+                </ul>
+            </form>
+        </div>
+
+    </div>
 
     <table class="table align-middle">
         <thead>
@@ -130,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </thead>
         <tbody id="dataBody">
         <?php
-        foreach ($eois as $index => $eoi) {
+        foreach ($eois ?? [] as $index => $eoi) {
             $gender = $eoi->gender == 1 ? 'Male' : 'Female';
             $rowNumber = $index + 1;
             echo <<<HTML
@@ -173,5 +180,8 @@ HTML;
 
     </table>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
 </html>
