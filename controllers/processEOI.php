@@ -21,6 +21,12 @@ function validateRequests(): void
         return strlen($v) > 0 && strlen($v) <= 20;
     }, "Last name must exist and would only contains 20 characters at most");
 
+    validate('dateOfBirth', function ($v) {
+        $userAge = date("Y") - date("Y", strtotime($v));
+
+        return $userAge >= 15 && $userAge <= 80;
+    }, "Age must be between 15 and 80");
+
     validate('gender', function ($v) {
         return !empty($v);
     }, "A gender must be selected");
@@ -59,8 +65,9 @@ function validateRequests(): void
                 || in_array(substr($postcode, 0, 2), $validPostcodes[$state], true);
         }
 
-        return isValidPostcodeForState($postcode, valueFromPost('state'));
-    }, "Postcode must be valid to state");
+        return strlen($postcode) === 4
+            && isValidPostcodeForState($postcode, valueFromPost('state'));
+    }, "Postcode must be valid");
 
     validate('email', function ($v) {
         return filter_var($v, FILTER_VALIDATE_EMAIL);
@@ -78,7 +85,8 @@ function validateRequests(): void
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    die(404);
+    header("Location: ../../");
+    exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

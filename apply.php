@@ -91,6 +91,9 @@
             <div class="col-75">
                 <input type="date" id="dateBirth" name="dateOfBirth" required
                        value="<?php echo $_SESSION["old"]['dateOfBirth'] ?? '' ?>" title="DD/MM/YYYY between 15 and 80"/>
+                <p class="text-error">
+                    <?php echo $_SESSION["errors"]["dateOfBirth"] ?? '' ?>
+                </p>
             </div>
         </div>
 
