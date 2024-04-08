@@ -1,19 +1,25 @@
 <?php
 
+// Include EOI model and request helper functions
 require_once __DIR__ . '/models/EOI.php';
 require_once __DIR__ . '/helpers/request.php';
 
+// Include statuses constant
 $statuses = require_once __DIR__ . '/const/status.php';
 
 use models\EOI;
 
+// Initialize variables for filtering
 $sJobRefNum = $sFirstName = $sLastName = '';
 
+// Handle GET request
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // Retrieve filter values from GET parameters
     $sJobRefNum = valueFromGet('job_ref_number');
     $sFirstName = valueFromGet('first_name');
     $sLastName = valueFromGet('last_name');
 
+    // Retrieve EOIs based on filter conditions
     $eois = EOI::where([
         'job_ref_number' => strtolower($sJobRefNum ?? ''),
         'first_name' => strtolower($sFirstName ?? ''),
@@ -21,22 +27,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     ]);
 }
 
+// Handle POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Find EOI object based on eoiNumber
     $eoi = EOI::find(valueFromPost('eoiNumber'));
 
+    // Perform action based on submitted form data
     switch (valueFromPost('_action')) {
         case 'updateStatus':
+            // Update status of EOI and save changes
             $eoi->status = valueFromPost('status');
             $eoi->save();
             break;
         case 'delete':
+            // Delete the EOI
             $eoi->delete();
             break;
         case 'deleteBatchByJobRefNum':
+            // Delete EOIs based on job reference number
             EOI::deleteBatchByJobRefNum(valueFromPost('jobRefNum'));
             break;
     }
 
+    // Refresh the page after performing action
     echo "<meta http-equiv='refresh' content='0'>";
 }
 

@@ -3,5 +3,6 @@
 </footer>
 
 <?php
+    // Unset all errors in session
     unset($_SESSION["errors"])
 ?>
