@@ -22,10 +22,13 @@ function validateRequests(): void
     }, "Last name must exist and would only contains 20 characters at most");
 
     validate('dateOfBirth', function ($v) {
+        if (empty(valueFromPost('dateOfBirth'))) {
+            return false;
+        }
         $userAge = date("Y") - date("Y", strtotime($v));
 
         return $userAge >= 15 && $userAge <= 80;
-    }, "Age must be between 15 and 80");
+    }, "Date of birth must be entered and Age must be between 15 and 80");
 
     validate('gender', function ($v) {
         return !empty($v);
