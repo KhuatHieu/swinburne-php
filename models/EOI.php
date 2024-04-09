@@ -7,30 +7,30 @@ require_once __DIR__ . '/../db/db.php';
 
 class EOI
 {
-    public int $eoiNumber;
-    public string $status;
-    public string $jobRefNumber;
-    public ?string $firstName;
-    public ?string $lastName;
-    public ?string $fullName;
-    public ?string $dateOfBirth;
-    public ?int $gender;
-    public ?string $street;
-    public ?string $suburb;
-    public ?string $state;
-    public ?string $postcode;
-    public ?string $email;
-    public ?string $phoneNumber;
-    public string $skillsCriticalThinking;
-    public string $skillsProblemSolving;
-    public string $skillsLeadership;
-    public string $skillsAdaptability;
-    public string $skillsCreativity;
-    public string $skillsTimeManagement;
-    public ?string $skillsOther;
+    public $eoiNumber;
+    public $status;
+    public $jobRefNumber;
+    public $firstName;
+    public $lastName;
+    public $fullName;
+    public $dateOfBirth;
+    public $gender;
+    public $street;
+    public $suburb;
+    public $state;
+    public $postcode;
+    public $email;
+    public $phoneNumber;
+    public $skillsCriticalThinking;
+    public $skillsProblemSolving;
+    public $skillsLeadership;
+    public $skillsAdaptability;
+    public $skillsCreativity;
+    public $skillsTimeManagement;
+    public $skillsOther;
 
     // Create a new EOI instance from a database row
-    private static function newFromRow($row): EOI
+    private static function newFromRow($row)
     {
         $eoi = new self();
 
@@ -61,7 +61,7 @@ class EOI
     }
 
     // Find an EOI by its number
-    public static function find($eoiNumber): ?EOI
+    public static function find($eoiNumber)
     {
         $mysqli = getMysqli();
         $eoi = null;
@@ -117,7 +117,7 @@ class EOI
     }
 
     // Save the EOI object to the database
-    public function save(): bool
+    public function save()
     {
         // Determine whether to perform an INSERT or UPDATE operation based on presence of eoiNumber
         if (empty($this->eoiNumber)) {
@@ -143,7 +143,7 @@ class EOI
             $statement = $mysqli->prepare($sql);
 
             // Bind parameters and execute statement for UPDATE
-            $statement->bind_param("ssssssssssssssssssi",
+            $statement->bind_param("sssssssssssssssssssi",
                 $this->status, $this->jobRefNumber, $this->firstName, $this->lastName, $this->dateOfBirth, $this->gender, $this->street, $this->suburb, $this->state, $this->postcode, $this->email, $this->phoneNumber, $this->skillsCriticalThinking, $this->skillsProblemSolving, $this->skillsLeadership, $this->skillsAdaptability, $this->skillsCreativity, $this->skillsTimeManagement, $this->skillsOther,
                 $this->eoiNumber);
         }
@@ -153,7 +153,7 @@ class EOI
     }
 
     // Delete the EOI from the database
-    public function delete(): bool
+    public function delete()
     {
         // Prepare DELETE query
         $sql = "DELETE FROM eoi WHERE eoi_number = ?";
@@ -170,7 +170,7 @@ class EOI
     }
 
     // Delete multiple EOIs by job reference number
-    public static function deleteBatchByJobRefNum($jobRefNum): bool
+    public static function deleteBatchByJobRefNum($jobRefNum)
     {
         // Prepare DELETE query
         $sql = "DELETE FROM eoi WHERE job_ref_number = ?";
@@ -186,3 +186,4 @@ class EOI
         return $statement->execute();
     }
 }
+?>

@@ -1,7 +1,7 @@
 <?php
 
 // Establish a MySQLi connection or return false on failure
-function getMysqli(): mysqli|bool
+function getMysqli()
 {
     // Load database settings from configuration file
     $settings = require __DIR__ . '/../settings.php';
@@ -33,3 +33,4 @@ function getMysqli(): mysqli|bool
         die(); // Terminate script execution
     }
 }
+?>

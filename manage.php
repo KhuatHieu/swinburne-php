@@ -21,9 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     // Retrieve EOIs based on filter conditions
     $eois = EOI::where([
-        'job_ref_number' => strtolower($sJobRefNum ?? ''),
-        'first_name' => strtolower($sFirstName ?? ''),
-        'last_name' => strtolower($sLastName ?? '')
+        'job_ref_number' => strtolower($sJobRefNum ?: ''),
+        'first_name' => strtolower($sFirstName ?: ''),
+        'last_name' => strtolower($sLastName ?: '')
     ]);
 }
 
@@ -150,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </thead>
         <tbody id="dataBody">
         <?php
-        foreach ($eois ?? [] as $index => $eoi) {
+        foreach ($eois ?: [] as $index => $eoi) {
             $gender = $eoi->gender == 1 ? 'Male' : 'Female';
             $rowNumber = $index + 1;
             echo <<<HTML

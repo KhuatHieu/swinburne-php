@@ -60,7 +60,7 @@
                     </option>
                 </select>
                 <p class="text-error">
-                    <?php echo $_SESSION["errors"]["jobRefNumber"] ?? '' ?>
+                    <?php echo isset($_SESSION["errors"]["jobRefNumber"]) ? $_SESSION["errors"]["jobRefNumber"] : ''; ?>
                 </p>
             </div>
         </div>
@@ -70,9 +70,9 @@
             </div>
             <div class="col-75">
                 <input type="text" id="firstName" name="firstName" required pattern="[a-zA-Z ]{1,20}"
-                       value="<?php echo $_SESSION["old"]['firstName'] ?? '' ?>" title="Max 20 alpha characters"/>
+                       value="<?php echo isset($_SESSION["old"]['firstName']) ? $_SESSION["old"]['firstName'] : ''; ?>" title="Max 20 alpha characters"/>
                 <p class="text-error">
-                    <?php echo $_SESSION["errors"]["firstName"] ?? '' ?>
+                    <?php echo isset($_SESSION["errors"]["firstName"]) ? $_SESSION["errors"]["firstName"] : ''; ?>
                 </p>
             </div>
         </div>
@@ -82,9 +82,9 @@
             </div>
             <div class="col-75">
                 <input type="text" id="lastName" name="lastName" required pattern="[a-zA-Z ]{1,20}"
-                       value="<?php echo $_SESSION["old"]['lastName'] ?? '' ?>" title="Max 20 alpha characters"/>
+                       value="<?php echo isset($_SESSION["old"]['lastName']) ? $_SESSION["old"]['lastName'] : ''; ?>" title="Max 20 alpha characters"/>
                 <p class="text-error">
-                    <?php echo $_SESSION["errors"]["lastName"] ?? '' ?>
+                    <?php echo isset($_SESSION["errors"]["lastName"]) ? $_SESSION["errors"]["lastName"] : ''; ?>
                 </p>
             </div>
         </div>
@@ -94,10 +94,10 @@
             </div>
             <div class="col-75">
                 <input type="date" id="dateBirth" name="dateOfBirth" required
-                       value="<?php echo $_SESSION["old"]['dateOfBirth'] ?? '' ?>"
+                       value="<?php echo isset($_SESSION["old"]['dateOfBirth']) ? $_SESSION["old"]['dateOfBirth'] : ''; ?>"
                        title="DD/MM/YYYY between 15 and 80"/>
                 <p class="text-error">
-                    <?php echo $_SESSION["errors"]["dateOfBirth"] ?? '' ?>
+                    <?php echo isset($_SESSION["errors"]["dateOfBirth"]) ? $_SESSION["errors"]["dateOfBirth"] : ''; ?>
                 </p>
             </div>
         </div>
@@ -110,7 +110,7 @@
                 </div>
                 <div class="col-75">
                     <input type="radio" id="male" name="gender"
-                           value="male" <?php echo ($_SESSION["old"]["gender"] ?? '') == 'male' ? 'checked' : ''; ?>
+                           value="male" <?php echo (isset($_SESSION["old"]["gender"]) ? $_SESSION["old"]["gender"] : '') == 'male' ? 'checked' : ''; ?>
                            required/>
                 </div>
             </div>
@@ -120,9 +120,9 @@
                 </div>
                 <div class="col-75">
                     <input type="radio" id="female" name="gender"
-                           value="female" <?php echo ($_SESSION["old"]["gender"] ?? '') == 'female' ? 'checked' : ''; ?>/>
+                           value="female" <?php echo (isset($_SESSION["old"]["gender"]) ? $_SESSION["old"]["gender"] : '') == 'female' ? 'checked' : ''; ?>/>
                     <p class="text-error">
-                        <?php echo $_SESSION["errors"]["gender"] ?? '' ?>
+                        <?php echo isset($_SESSION["errors"]["gender"]) ? $_SESSION["errors"]["gender"] : ''; ?>
                     </p>
                 </div>
             </div>
@@ -135,9 +135,9 @@
             </div>
             <div class="col-75">
                 <input type="text" id="address" name="street" required
-                       value="<?php echo $_SESSION["old"]['street'] ?? '' ?>"/>
+                       value="<?php echo isset($_SESSION["old"]['street']) ? $_SESSION["old"]['street'] : ''; ?>"/>
                 <p class="text-error">
-                    <?php echo $_SESSION["errors"]["address"] ?? '' ?>
+                    <?php echo isset($_SESSION["errors"]["street"]) ? $_SESSION["errors"]["street"] : ''; ?>
                 </p>
             </div>
         </div>
@@ -148,9 +148,9 @@
             </div>
             <div class="col-75">
                 <input type="text" id="sub_town" name="suburb" required pattern="[a-zA-Z ]+"
-                       value="<?php echo $_SESSION["old"]['suburb'] ?? '' ?>"/>
+                       value="<?php echo isset($_SESSION["old"]['suburb']) ? $_SESSION["old"]['suburb'] : ''; ?>"/>
                 <p class="text-error">
-                    <?php echo $_SESSION["errors"]["suburb"] ?? '' ?>
+                    <?php echo isset($_SESSION["errors"]["suburb"]) ? $_SESSION["errors"]["suburb"] : ''; ?>
                 </p>
             </div>
         </div>
@@ -161,49 +161,48 @@
             </div>
             <div class="col-75">
                 <select name="state" id="state" required>
-                    <option value="" <?php echo ($_SESSION["old"]["state"] ?? '') == '' ? 'selected' : ''; ?>>
+                    <option value="" <?php echo (isset($_SESSION["old"]["state"]) ? $_SESSION["old"]["state"] : '') == '' ? 'selected' : ''; ?>>
                         Please select
                     </option>
-                    <option value="VIC" <?php echo ($_SESSION["old"]["state"] ?? '') == 'VIC' ? 'selected' : ''; ?>>
+                    <option value="VIC" <?php echo (isset($_SESSION["old"]["state"]) ? $_SESSION["old"]["state"] : '') == 'VIC' ? 'selected' : ''; ?>>
                         VIC
                     </option>
-                    <option value="NSW" <?php echo ($_SESSION["old"]["state"] ?? '') == 'NSW' ? 'selected' : ''; ?>>
+                    <option value="NSW" <?php echo (isset($_SESSION["old"]["state"]) ? $_SESSION["old"]["state"] : '') == 'NSW' ? 'selected' : ''; ?>>
                         NSW
                     </option>
-                    <option value="QLD" <?php echo ($_SESSION["old"]["state"] ?? '') == 'QLD' ? 'selected' : ''; ?>>
+                    <option value="QLD" <?php echo (isset($_SESSION["old"]["state"]) ? $_SESSION["old"]["state"] : '') == 'QLD' ? 'selected' : ''; ?>>
                         QLD
                     </option>
-                    <option value="NT" <?php echo ($_SESSION["old"]["state"] ?? '') == 'NT' ? 'selected' : ''; ?>>
+                    <option value="NT" <?php echo (isset($_SESSION["old"]["state"]) ? $_SESSION["old"]["state"] : '') == 'NT' ? 'selected' : ''; ?>>
                         NT
                     </option>
-                    <option value="WA" <?php echo ($_SESSION["old"]["state"] ?? '') == 'WA' ? 'selected' : ''; ?>>
+                    <option value="WA" <?php echo (isset($_SESSION["old"]["state"]) ? $_SESSION["old"]["state"] : '') == 'WA' ? 'selected' : ''; ?>>
                         WA
                     </option>
-                    <option value="SA" <?php echo ($_SESSION["old"]["state"] ?? '') == 'SA' ? 'selected' : ''; ?>>
+                    <option value="SA" <?php echo (isset($_SESSION["old"]["state"]) ? $_SESSION["old"]["state"] : '') == 'SA' ? 'selected' : ''; ?>>
                         SA
                     </option>
-                    <option value="TAS" <?php echo ($_SESSION["old"]["state"] ?? '') == 'TAS' ? 'selected' : ''; ?>>
+                    <option value="TAS" <?php echo (isset($_SESSION["old"]["state"]) ? $_SESSION["old"]["state"] : '') == 'TAS' ? 'selected' : ''; ?>>
                         TAS
                     </option>
-                    <option value="ACT" <?php echo ($_SESSION["old"]["state"] ?? '') == 'ACT' ? 'selected' : ''; ?>>
+                    <option value="ACT" <?php echo (isset($_SESSION["old"]["state"]) ? $_SESSION["old"]["state"] : '') == 'ACT' ? 'selected' : ''; ?>>
                         ACT
                     </option>
                 </select>
                 <p class="text-error">
-                    <?php echo $_SESSION["errors"]["state"] ?? '' ?>
+                    <?php echo isset($_SESSION["errors"]["state"]) ? $_SESSION["errors"]["state"] : ''; ?>
                 </p>
             </div>
         </div>
-
         <div class="row">
             <div class="col-25">
                 <label for="postcode">Postcode</label>
             </div>
             <div class="col-75">
                 <input type="text" id="postcode" name="postcode" required pattern="\d{4}"
-                       value="<?php echo $_SESSION["old"]['postcode'] ?? '' ?>"/>
+                       value="<?php echo isset($_SESSION["old"]['postcode']) ? $_SESSION["old"]['postcode'] : ''; ?>"/>
                 <p class="text-error">
-                    <?php echo $_SESSION["errors"]["postcode"] ?? '' ?>
+                    <?php echo isset($_SESSION["errors"]["postcode"]) ? $_SESSION["errors"]["postcode"] : ''; ?>
                 </p>
             </div>
         </div>
@@ -214,9 +213,9 @@
             </div>
             <div class="col-75">
                 <input type="email" id="myEmail" name="email" placeholder="name@domain.com" required
-                       value="<?php echo $_SESSION["old"]['email'] ?? '' ?>"/>
+                       value="<?php echo isset($_SESSION["old"]['email']) ? $_SESSION["old"]['email'] : ''; ?>"/>
                 <p class="text-error">
-                    <?php echo $_SESSION["errors"]["email"] ?? '' ?>
+                    <?php echo isset($_SESSION["errors"]["email"]) ? $_SESSION["errors"]["email"] : ''; ?>
                 </p>
             </div>
         </div>
@@ -227,9 +226,9 @@
             </div>
             <div class="col-75">
                 <input type="text" id="phoneNumber" name="phoneNumber" required pattern="[0-9 ]{8,12}"
-                       value="<?php echo $_SESSION["old"]['phoneNumber'] ?? '' ?>"/>
+                       value="<?php echo isset($_SESSION["old"]['phoneNumber']) ? $_SESSION["old"]['phoneNumber'] : ''; ?>"/>
                 <p class="text-error">
-                    <?php echo $_SESSION["errors"]["phoneNumber"] ?? '' ?>
+                    <?php echo isset($_SESSION["errors"]["phoneNumber"]) ? $_SESSION["errors"]["phoneNumber"] : ''; ?>
                 </p>
             </div>
         </div>
@@ -242,7 +241,7 @@
                 </div>
                 <div class="col-75">
                     <input type="checkbox" id="criticalThinking"
-                           name="skillsCriticalThinking" <?php echo isset($_SESSION["old"]['skillsCriticalThinking']) && $_SESSION["old"]['skillsCriticalThinking'] ? 'checked' : '' ?>>
+                           name="skillsCriticalThinking" <?php echo isset($_SESSION["old"]['skillsCriticalThinking']) && $_SESSION["old"]['skillsCriticalThinking'] ? 'checked' : ''; ?>>
                 </div>
             </div>
             <div class="row">
@@ -251,7 +250,7 @@
                 </div>
                 <div class="col-75">
                     <input type="checkbox" id="problemSolving"
-                           name="skillsProblemSolving" <?php echo isset($_SESSION["old"]['skillsProblemSolving']) && $_SESSION["old"]['skillsProblemSolving'] ? 'checked' : '' ?>>
+                           name="skillsProblemSolving" <?php echo isset($_SESSION["old"]['skillsProblemSolving']) && $_SESSION["old"]['skillsProblemSolving'] ? 'checked' : ''; ?>>
                 </div>
             </div>
             <div class="row">
@@ -260,7 +259,7 @@
                 </div>
                 <div class="col-75">
                     <input type="checkbox" id="leadership"
-                           name="skillsLeadership" <?php echo isset($_SESSION["old"]['skillsLeadership']) && $_SESSION["old"]['skillsLeadership'] ? 'checked' : '' ?>>
+                           name="skillsLeadership" <?php echo isset($_SESSION["old"]['skillsLeadership']) && $_SESSION["old"]['skillsLeadership'] ? 'checked' : ''; ?>>
                 </div>
             </div>
             <div class="row">
@@ -269,7 +268,7 @@
                 </div>
                 <div class="col-75">
                     <input type="checkbox" id="adaptability"
-                           name="skillsAdaptability" <?php echo isset($_SESSION["old"]['skillsAdaptability']) && $_SESSION["old"]['skillsAdaptability'] ? 'checked' : '' ?>>
+                           name="skillsAdaptability" <?php echo isset($_SESSION["old"]['skillsAdaptability']) && $_SESSION["old"]['skillsAdaptability'] ? 'checked' : ''; ?>>
                 </div>
             </div>
             <div class="row">
@@ -278,7 +277,7 @@
                 </div>
                 <div class="col-75">
                     <input type="checkbox" id="creativity"
-                           name="skillsCreativity" <?php echo isset($_SESSION["old"]['skillsCreativity']) && $_SESSION["old"]['skillsCreativity'] ? 'checked' : '' ?>>
+                           name="skillsCreativity" <?php echo isset($_SESSION["old"]['skillsCreativity']) && $_SESSION["old"]['skillsCreativity'] ? 'checked' : ''; ?>>
                 </div>
             </div>
             <div class="row">
@@ -287,7 +286,7 @@
                 </div>
                 <div class="col-75">
                     <input type="checkbox" id="timeManagement"
-                           name="skillsTimeManagement" <?php echo isset($_SESSION["old"]['skillsTimeManagement']) && $_SESSION["old"]['skillsTimeManagement'] ? 'checked' : '' ?>>
+                           name="skillsTimeManagement" <?php echo isset($_SESSION["old"]['skillsTimeManagement']) && $_SESSION["old"]['skillsTimeManagement'] ? 'checked' : ''; ?>>
                 </div>
             </div>
             <div class="row">
@@ -296,11 +295,11 @@
                 </div>
                 <div class="col-75">
                     <input type="checkbox" name="skillsOtherCheckbox" id=""
-                        <?php echo isset($_SESSION["old"]['skillsOtherCheckbox']) && $_SESSION["old"]['skillsOtherCheckbox'] ? 'checked' : '' ?> >
+                        <?php echo isset($_SESSION["old"]['skillsOtherCheckbox']) && $_SESSION["old"]['skillsOtherCheckbox'] ? 'checked' : ''; ?> >
                     <input type="text" id="others" name="skillsOther" placeholder="List your other skills here"
-                           value="<?php echo $_SESSION["old"]['skillsOther'] ?? '' ?>"/>
+                           value="<?php echo isset($_SESSION["old"]['skillsOther']) ? $_SESSION["old"]['skillsOther'] : ''; ?>"/>
                     <p class="text-error">
-                        <?php echo $_SESSION["errors"]["skillsOther"] ?? '' ?>
+                        <?php echo isset($_SESSION["errors"]["skillsOther"]) ? $_SESSION["errors"]["skillsOther"] : ''; ?>
                     </p>
                 </div>
             </div>

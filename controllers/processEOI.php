@@ -13,7 +13,7 @@ use models\EOI;
  * Ensures that all required fields values meet certain criteria
  * Otherwise, send user back to input form with errors
  */
-function validateRequests(): void
+function validateRequests()
 {
     // User must select jobRefNumber
     validate('jobRefNumber', function ($v) {
@@ -34,9 +34,11 @@ function validateRequests(): void
 
     // User must enter dateOfBirth, and Age of user must be between 15 and 80
     validate('dateOfBirth', function ($v) {
-        if (empty(valueFromPost('dateOfBirth'))) {
+        $dateOfBirth = valueFromPost('dateOfBirth');
+        if (empty($dateOfBirth)) {
             return false;
         }
+
         $userAge = date("Y") - date("Y", strtotime($v));
 
         return $userAge >= 15 && $userAge <= 80;
@@ -47,15 +49,15 @@ function validateRequests(): void
         return !empty($v);
     }, "A gender must be selected");
 
-    // Street must exist and must not longer than 40 characters
+    // Street must exist and must not longer than 80 characters
     validate('street', function ($v) {
-        return strlen($v) > 0 && strlen($v) <= 40;
-    }, "Street must exist and would only contains 40 characters at most");
+        return strlen($v) > 0 && strlen($v) <= 80;
+    }, "Street and would only contains 80 characters at most");
 
-    // Suburb/town must exist and must not longer than 40 characters
+    // Suburb/town must exist and must not longer than 80 characters
     validate('suburb', function ($v) {
-        return strlen($v) > 0 && strlen($v) <= 40;
-    }, "Suburb/town must exist and would only contains 40 characters at most");
+        return strlen($v) > 0 && strlen($v) <= 80;
+    }, "Suburb/town and would only contains 80 characters at most");
 
     // State must be one of VIC, NSW, QLD, NT, WA, SA, TAS or ACT
     validate('state', function ($v) {
@@ -64,7 +66,7 @@ function validateRequests(): void
 
     // Postcode must be valid for the selected state
     validate('postcode', function ($postcode) {
-        function isValidPostcodeForState($postcode, $state): bool
+        function isValidPostcodeForState($postcode, $state)
         {
             $validPostcodes = [
                 'VIC' => ['3', '8'],
@@ -106,10 +108,17 @@ function validateRequests(): void
     // Other skills must be entered if the checkbox is checked
     validate('skillsOther', function () {
         if (existsFromPost('skillsOtherCheckbox')) {
-            return !empty(valueFromPost('skillsOther'));
+            // If 'skillsOtherCheckbox' exists, check if 'skillsOther' is set and not empty
+            if (isset($_POST['skillsOther']) && $_POST['skillsOther'] !== '') {
+                return true;
+            } else {
+                return false;
+            }
         } else {
+            // If 'skillsOtherCheckbox' doesn't exist, return true
             return true;
         }
+
     }, "You must enter other skills if checked checkbox");
 
     // Begin the validation process
@@ -165,3 +174,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Redirect back to the previous page after form submission
     header("Location: " . $_SERVER['HTTP_REFERER']);
 }
+?>
