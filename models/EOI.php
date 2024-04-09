@@ -106,7 +106,7 @@ class EOI
         $result = $mysqli->query($query);
 
         // Create and return array of EOI objects from query results
-        $eoiModels = [];
+        $eoiModels = array();
         if ($result && $result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $eoiModels[] = self::newFromRow($row);

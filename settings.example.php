@@ -1,7 +1,7 @@
 <?php
 
 // Return an array containing database configuration settings
-return [
+return array(
     // Database server address
     'DB_SERVER' => '127.0.0.1',
 
@@ -13,4 +13,4 @@ return [
 
     // Database name
     'DB_NAME' => 'project'
-];
+);

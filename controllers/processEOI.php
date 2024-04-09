@@ -17,7 +17,7 @@ function validateRequests()
 {
     // User must select jobRefNumber
     validate('jobRefNumber', function ($v) {
-        return !empty($_POST["jobRefNumber"]);
+        return isset($_POST["jobRefNumber"]) && $_POST["jobRefNumber"] !== '';
     }, "You must select Job Reference Number");
 
     // User must enter firstName, firstName length must <= 20
@@ -46,7 +46,7 @@ function validateRequests()
 
     // User must select a gender
     validate('gender', function ($v) {
-        return !empty($v);
+        return isset($v) && $v !== '';
     }, "A gender must be selected");
 
     // Street must exist and must not longer than 80 characters
@@ -61,23 +61,23 @@ function validateRequests()
 
     // State must be one of VIC, NSW, QLD, NT, WA, SA, TAS or ACT
     validate('state', function ($v) {
-        return in_array($v, ["VIC", "NSW", "QLD", "NT", "WA", "SA", "TAS", "ACT"]);
+        return in_array($v, array("VIC", "NSW", "QLD", "NT", "WA", "SA", "TAS", "ACT"));
     }, "State must be one of VIC, NSW, QLD, NT, WA, SA, TAS or ACT");
 
     // Postcode must be valid for the selected state
     validate('postcode', function ($postcode) {
         function isValidPostcodeForState($postcode, $state)
         {
-            $validPostcodes = [
-                'VIC' => ['3', '8'],
-                'NSW' => ['1', '2'],
-                'QLD' => ['4', '9'],
-                'NT' => ['08', '09'],
-                'WA' => ['6'],
-                'SA' => ['5'],
-                'TAS' => ['7'],
-                'ACT' => ['02']
-            ];
+            $validPostcodes = array(
+                'VIC' => array('3', '8'),
+                'NSW' => array('1', '2'),
+                'QLD' => array('4', '9'),
+                'NT' => array('08', '09'),
+                'WA' => array('6'),
+                'SA' => array('5'),
+                'TAS' => array('7'),
+                'ACT' => array('02')
+            );
 
             if (!array_key_exists($state, $validPostcodes)) {
                 return false;

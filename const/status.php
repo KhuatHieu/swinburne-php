@@ -1,8 +1,8 @@
 <?php
 
 // Return array of status constants
-return [
+return array(
     'new',
     'current',
     'final'
-];
+);
